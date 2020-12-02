@@ -1,4 +1,5 @@
 *~
 *.bak
 
-/adventofcode
+/day*
+/cmd/day*/day*
