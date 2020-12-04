@@ -80,7 +80,7 @@ func readGridFromReader(r io.Reader) (grid Grid, err error) {
 	return
 }
 
-func countTreesInPath(grid Grid) int {
+func countTreesInPath(grid Grid, right, down int) int {
 	var trees int
 
 	x, y := 0, 0
@@ -89,7 +89,7 @@ func countTreesInPath(grid Grid) int {
 		if grid[y][x].Tree() {
 			trees++
 		}
-		x, y = x+3, y+1
+		x, y = x+right, y+down
 	}
 
 	return trees
@@ -102,6 +102,11 @@ func main() {
 		os.Exit(2)
 	}
 
-	trees := countTreesInPath(grid)
+	trees := countTreesInPath(grid, 1, 1)
+	trees *= countTreesInPath(grid, 3, 1)
+	trees *= countTreesInPath(grid, 5, 1)
+	trees *= countTreesInPath(grid, 7, 1)
+	trees *= countTreesInPath(grid, 1, 2)
+
 	fmt.Printf("%d\n", trees)
 }
