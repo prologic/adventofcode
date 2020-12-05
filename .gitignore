@@ -1,5 +1,6 @@
 *~
 *.bak
+*.test
 
 /day*
 /cmd/day*/day*
