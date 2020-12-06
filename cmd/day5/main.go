@@ -10,7 +10,7 @@ import (
 	"github.com/prologic/aoc"
 )
 
-func readBoardingpassesFromReader(r io.Reader) (bps []aoc.Boardingpass, err error) {
+func readBoardingpassesFromReader(r io.Reader) (bps aoc.Boardingpasses, err error) {
 	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
@@ -36,16 +36,20 @@ func main() {
 		os.Exit(2)
 	}
 
-	fmt.Fprintf(os.Stderr, "%d boarding passes found\n", len(bps))
-
-	var highestSeatID int
-
+	bpsMap := make([]*aoc.Boardingpass, 1024)
 	for _, bp := range bps {
-		fmt.Fprintf(os.Stderr, "%s\n", bp)
-		if bp.SeatID() > highestSeatID {
-			highestSeatID = bp.SeatID()
-		}
+		bpsMap[bp.SeatID()] = &bp
 	}
 
-	fmt.Printf("%d\n", highestSeatID)
+	fmt.Fprintf(os.Stderr, "%d boarding passes found\n", len(bps))
+
+	for i := 1; i < 1023; i++ {
+		bp := bpsMap[i]
+		if bp == nil {
+			if bpsMap[i-1] != nil && bpsMap[i+1] != nil {
+				fmt.Printf("%d\n", i)
+				break
+			}
+		}
+	}
 }

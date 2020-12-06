@@ -24,6 +24,12 @@ func (bp Boardingpass) String() string {
 	return fmt.Sprintf("%dx%d:%d", bp.Row(), bp.Col(), bp.SeatID())
 }
 
+type Boardingpasses []Boardingpass
+
+func (bps Boardingpasses) Len() int           { return len(bps) }
+func (bps Boardingpasses) Less(i, j int) bool { return bps[i] < bps[j] }
+func (bps Boardingpasses) Swap(i, j int)      { bps[i], bps[j] = bps[j], bps[i] }
+
 func ParseBoardingpass(s string) (bp Boardingpass, err error) {
 	r := strings.NewReplacer("F", "0", "B", "1", "L", "0", "R", "1")
 	b := r.Replace(s)
