@@ -31,8 +31,8 @@ func TestParseBoardingpass(t *testing.T) {
 		bp, err := ParseBoardingpass(testCase.input)
 		assert.NoError(err)
 
-		assert.Equal(testCase.row, bp.Row, "Row mismatch")
-		assert.Equal(testCase.col, bp.Col, "Col mismatch")
+		assert.Equal(testCase.row, bp.Row(), "Row mismatch")
+		assert.Equal(testCase.col, bp.Col(), "Col mismatch")
 		assert.Equal(testCase.seatid, bp.SeatID(), "SeatID mismatch")
 	}
 }
