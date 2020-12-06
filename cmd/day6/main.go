@@ -8,40 +8,36 @@ import (
 )
 
 func main() {
-	sum := 0
-	qs := make(map[rune]bool)
+	sum, g := 0, 0
+	qs := make(map[rune]int)
 
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
 		if line == "" {
-			n := 0
-			for _, a := range qs {
-				if a {
-					n++
+			for _, n := range qs {
+				if n == g {
+					sum++
 				}
 			}
-			sum += n
-			fmt.Fprintf(os.Stderr, "%d\n", n)
-			qs = make(map[rune]bool)
+			g = 0
+			qs = make(map[rune]int)
 			continue
 		}
 		for _, c := range line {
-			qs[c] = true
+			qs[c]++
 		}
+		g++
 	}
 	if err := scanner.Err(); err != nil {
 		fmt.Fprintf(os.Stderr, "error reading standard input: %s", err)
 		os.Exit(2)
 	}
-	n := 0
-	for _, a := range qs {
-		if a {
-			n++
+	for _, n := range qs {
+		if n == g {
+			sum++
 		}
 	}
-	sum += n
-	fmt.Fprintf(os.Stderr, "%d\n", n)
 
 	fmt.Printf("%d\n", sum)
 }
